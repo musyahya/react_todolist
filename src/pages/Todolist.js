@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import CardComponent from '../components/CardComponent';
 import { Api_Url } from '../utility/Api_Url';
 
 const Todolist = () => {
@@ -19,25 +19,14 @@ const Todolist = () => {
             // console.log(response);
           })
           .catch(function (error) {
-            // handle error
             // console.log(error);
           })
     }
 
-    console.log(todolist);
-
     return (
       <div className="row justify-content-center mt-5">
         <div className="col-md-6">
-          {todolist &&
-            todolist.map((item) => (
-              <Card key={item.id} className="shadow-sm">
-                <Card.Body>
-                  <Card.Title>{item.judul}</Card.Title>
-                  <Card.Text>{item.deskripsi}</Card.Text>
-                </Card.Body>
-              </Card>
-            ))}
+          {todolist && todolist.map((item) => <CardComponent key={item.id} data={item} />)}
         </div>
       </div>
     );
