@@ -1,11 +1,20 @@
 import React from 'react';
 import { Button, ButtonGroup, Card } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import "./CardComponent.css";
 
 const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
+
+    const history = useHistory();
+
+    function gotoStep(id) {
+        history.push('/' +id);
+    }
+
   return (
     <Card className="shadow-sm mt-3">
       <Card.Body>
-        <Card.Title>{data.judul}</Card.Title>
+        <Card.Title onClick={() => gotoStep(data.id)} className="pointer">{data.judul}</Card.Title>
         <Card.Text>{data.deskripsi}</Card.Text>
         <ButtonGroup className="float-right">
           <Button
