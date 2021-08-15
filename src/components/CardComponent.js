@@ -5,7 +5,7 @@ const CardComponent = ({data}) => {
 
 
     return (
-      <Card className="shadow-sm">
+      <Card className="shadow-sm mt-3">
         <Card.Body>
           <Card.Title>{data.judul}</Card.Title>
           <Card.Text>{data.deskripsi}</Card.Text>
