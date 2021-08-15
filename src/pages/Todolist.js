@@ -75,11 +75,23 @@ const Todolist = () => {
              setFormData(false);
             setEditData(false);
              getTodolist();
-             console.log(response);
+            //  console.log(response);
            })
            .catch(function (error) {
-             console.log(error);
+            //  console.log(error);
            });
+    }
+
+    function deleteTodolist(id){
+        axios
+          .delete(Api_Url + "todolist/" + id)
+          .then(function (response) {
+            getTodolist();
+             console.log(response);
+          })
+          .catch(function (error) {
+             console.log(error);
+          });
     }
 
     function showUpdate(id){
@@ -120,6 +132,7 @@ const Todolist = () => {
                 key={item.id}
                 data={item}
                 showUpdate={showUpdate}
+                deleteTodolist={deleteTodolist}
               />
             ))}
         </div>

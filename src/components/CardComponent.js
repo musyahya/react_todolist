@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ButtonGroup, Card } from 'react-bootstrap';
 
-const CardComponent = ({ data, showUpdate }) => {
+const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
   return (
     <Card className="shadow-sm mt-3">
       <Card.Body>
@@ -16,7 +16,11 @@ const CardComponent = ({ data, showUpdate }) => {
           >
             Edit
           </Button>
-          <Button variant="danger" size="sm">
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => deleteTodolist(data.id)}
+          >
             Hapus
           </Button>
         </ButtonGroup>
