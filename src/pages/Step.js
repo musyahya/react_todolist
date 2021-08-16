@@ -53,8 +53,40 @@ const Step = (props) => {
              });
      }
 
+       function showStep(id) {
+         axios
+           .get(Api_Url + "step/" + id)
+           .then(function (response) {
+             setJudul(response.data.judul);
+             setDeskripsi(response.data.deskripsi);
+             setId(response.data.id);
+            //  console.log(response);
+           })
+           .catch(function (error) {
+            //  console.log(error);
+           });
+       }
+
      
-     function updateStep() {}
+     function updateStep() {
+            axios
+              .put(Api_Url + "step/" + id, {
+                judul: judul,
+                deskripsi: deskripsi,
+              })
+              .then(function (response) {
+                setJudul("");
+                setDeskripsi("");
+                setId("");
+                setFormData(false);
+                setEditData(false);
+                getByTodolistId();
+                //  console.log(response);
+              })
+              .catch(function (error) {
+                //  console.log(error);
+              });
+     }
 
       function showInsert() {
         setFormData(true);
@@ -63,6 +95,12 @@ const Step = (props) => {
         setDeskripsi("");
         setId("");
       }
+
+        function showUpdate(id) {
+          setFormData(true);
+          setEditData(true);
+          showStep(id);
+        }
 
        function tutupForm() {
          setFormData(false);
@@ -109,7 +147,7 @@ const Step = (props) => {
               <CardComponent
                 key={item.id}
                 data={item}
-                // showUpdate={showUpdate}
+                showUpdate={showUpdate}
                 // deleteTodolist={deleteTodolist}
               />
             ))
