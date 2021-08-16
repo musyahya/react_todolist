@@ -3,17 +3,16 @@ import { Button, ButtonGroup, Card, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import "./CardComponent.css";
 
-const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
+const CardComponent = ({ data, showUpdate, deleteData }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-   const [show, setShow] = useState(false);
-   const handleClose = () => setShow(false);
-   const handleShow = () => setShow(true);
-   
-    const history = useHistory();
+  const history = useHistory();
 
-    function gotoStep(id) {
-        history.push('/' +id);
-    }
+  function gotoStep(id) {
+    history.push("/" + id);
+  }
 
   return (
     <Fragment>
@@ -51,7 +50,7 @@ const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
           <Button variant="secondary" onClick={handleClose}>
             Batal
           </Button>
-          <Button variant="danger" onClick={() => deleteTodolist(data.id)}>
+          <Button variant="danger" onClick={() => deleteData(data.id)}>
             Hapus
           </Button>
         </Modal.Footer>

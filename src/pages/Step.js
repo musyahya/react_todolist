@@ -88,6 +88,18 @@ const Step = (props) => {
               });
      }
 
+        function deleteStep(id) {
+          axios
+            .delete(Api_Url + "step/" + id)
+            .then(function (response) {
+              getByTodolistId();
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+
       function showInsert() {
         setFormData(true);
         setEditData(false);
@@ -148,7 +160,7 @@ const Step = (props) => {
                 key={item.id}
                 data={item}
                 showUpdate={showUpdate}
-                // deleteTodolist={deleteTodolist}
+                deleteData={deleteStep}
               />
             ))
           ) : (

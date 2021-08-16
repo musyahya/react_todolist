@@ -144,7 +144,7 @@ const Todolist = () => {
                 key={item.id}
                 data={item}
                 showUpdate={showUpdate}
-                deleteTodolist={deleteTodolist}
+                deleteData={deleteTodolist}
               />
             ))}
         </div>
