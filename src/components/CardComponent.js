@@ -19,7 +19,10 @@ const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
     <Fragment>
       <Card className="shadow-sm mt-3">
         <Card.Body>
-          <Card.Title onClick={() => gotoStep(data.id)} className="pointer">
+          <Card.Title
+            onClick={data.todolist_id ? "" : () => gotoStep(data.id)}
+            className={data.todolist_id ? "" : "pointer"}
+          >
             {data.judul}
           </Card.Title>
           <Card.Text>{data.deskripsi}</Card.Text>
@@ -32,11 +35,7 @@ const CardComponent = ({ data, showUpdate, deleteTodolist }) => {
             >
               Edit
             </Button>
-            <Button
-              variant="danger"
-              size="sm"
-              onClick={handleShow}
-            >
+            <Button variant="danger" size="sm" onClick={handleShow}>
               Hapus
             </Button>
           </ButtonGroup>

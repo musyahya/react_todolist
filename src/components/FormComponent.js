@@ -3,24 +3,19 @@ import { Button, Form } from 'react-bootstrap';
 
 const FormComponent = ({
   formData,
-  setFormData,
   tutupForm,
   judul,
   setJudul,
   deskripsi,
   setDeskripsi,
-  postTodolist,
+  postData,
   editData,
-  updateTodolist,
+  updateData,
 }) => {
   // console.log(deskripsi)
 
   return (
     <Fragment>
-      <Button variant="primary" size="sm" onClick={() => setFormData(true)}>
-        Tambah
-      </Button>
-
       {formData && (
         <Form className="mt-3">
           <Form.Group>
@@ -47,7 +42,7 @@ const FormComponent = ({
           <Button
             variant="success"
             size="sm"
-            onClick={editData ? updateTodolist : postTodolist}
+            onClick={editData ? updateData : postData}
           >
             {editData ? "Update" : "Simpan"}
           </Button>

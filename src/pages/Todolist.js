@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
 import { Api_Url } from '../utility/Api_Url';
@@ -94,6 +95,14 @@ const Todolist = () => {
           });
     }
 
+    function showInsert(){
+      setFormData(true);
+      setEditData(false);
+       setJudul("");
+       setDeskripsi("");
+       setId("");
+    }
+
     function showUpdate(id){
         setFormData(true);
         setEditData(true);
@@ -113,17 +122,20 @@ const Todolist = () => {
     return (
       <div className="row justify-content-center mt-5">
         <div className="col-md-6">
+          <Button variant="primary" size="sm" onClick={showInsert}>
+            Tambah
+          </Button>
+
           <FormComponent
             formData={formData}
-            setFormData={setFormData}
             tutupForm={tutupForm}
             judul={judul}
             setJudul={setJudul}
             deskripsi={deskripsi}
             setDeskripsi={setDeskripsi}
-            postTodolist={postTodolist}
+            postData={postTodolist}
             editData={editData}
-            updateTodolist={updateTodolist}
+            updateData={updateTodolist}
           />
 
           {todolist &&
