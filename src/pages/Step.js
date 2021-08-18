@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Link, withRouter } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
+import PaginationComponent from '../components/PaginationComponent';
 import { Api_Url } from '../utility/Api_Url';
 
 const Step = (props) => {
@@ -27,7 +28,7 @@ const Step = (props) => {
              )
              .then(function (response) {
                setStep(response.data);
-               // console.log(response);
+              //  console.log(response);
              })
              .catch(function (error) {
                // console.log(error);
@@ -93,10 +94,10 @@ const Step = (props) => {
             .delete(Api_Url + "step/" + id)
             .then(function (response) {
               getByTodolistId();
-              console.log(response);
+              // console.log(response);
             })
             .catch(function (error) {
-              console.log(error);
+              // console.log(error);
             });
         }
 
@@ -154,16 +155,19 @@ const Step = (props) => {
             updateData={updateStep}
           />
 
-          {step.length > 0 ? (
-            step.map((item) => (
+          {step.data &&
+            step.data.map((item) => (
               <CardComponent
                 key={item.id}
                 data={item}
                 showUpdate={showUpdate}
                 deleteData={deleteStep}
               />
-            ))
-          ) : (
+            ))}
+
+          {step.total > 0 && <PaginationComponent data={step} setData={setStep} />}
+
+          {step.total === 0 && (
             <p className="text-center text-danger mt-4">
               <strong>Todolist tidak memiliki step</strong>
             </p>
