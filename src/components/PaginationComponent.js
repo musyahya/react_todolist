@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Pagination } from 'react-bootstrap';
 
 const PaginationComponent = ({ data, setData }) => {
-//   console.log(data.first_page_url);
+  console.log(data);
 
   function firstPage(){
        axios
@@ -17,15 +17,39 @@ const PaginationComponent = ({ data, setData }) => {
          });
   }
 
+  function nextPage(){
+       axios
+         .get(data.next_page_url)
+         .then(function (response) {
+           setData(response.data);
+            //   console.log(response);
+         })
+         .catch(function (error) {
+           //    console.log(error);
+         });
+  }
+  
+  function prevPage(){
+       axios
+         .get(data.prev_page_url)
+         .then(function (response) {
+           setData(response.data);
+        //    console.log(response);
+         })
+         .catch(function (error) {
+           //    console.log(error);
+         });
+  }
+
   function lastPage(){
        axios
          .get(data.last_page_url)
          .then(function (response) {
            setData(response.data);
-           console.log(response);
+        //    console.log(response);
          })
          .catch(function (error) {
-           console.log(error);
+        //    console.log(error);
          });
   }
 
@@ -41,17 +65,24 @@ const PaginationComponent = ({ data, setData }) => {
 
   return (
     <Pagination className="mt-4">
-      <Pagination.First onClick={firstPage} />
-      <Pagination.Prev />
+      {data.prev_page_url && (
+        <Fragment>
+          <Pagination.First onClick={firstPage} />
+          <Pagination.Prev onClick={prevPage} />
+        </Fragment>
+      )}
 
       <Pagination.Item>{10}</Pagination.Item>
       <Pagination.Item>{11}</Pagination.Item>
       <Pagination.Item active>{12}</Pagination.Item>
       <Pagination.Item>{13}</Pagination.Item>
       <Pagination.Item disabled>{14}</Pagination.Item>
-
-      <Pagination.Next />
-      <Pagination.Last onClick={lastPage} />
+      {data.next_page_url && (
+        <Fragment>
+          <Pagination.Next onClick={nextPage} />
+          <Pagination.Last onClick={lastPage} />
+        </Fragment>
+      )}
     </Pagination>
   );
 };
