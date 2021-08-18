@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, withRouter } from "react-router-dom";
+import AlertComponent from '../components/AlertComponent';
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
 import PaginationComponent from '../components/PaginationComponent';
@@ -12,6 +13,7 @@ const Step = (props) => {
     const [step, setStep] = useState("");
      const [formData, setFormData] = useState(false);
      const [editData, setEditData] = useState(false);
+       const [alert, setAlert] = useState(false);
 
      const [id, setId] = useState("");
      const [judul, setJudul] = useState("");
@@ -46,6 +48,7 @@ const Step = (props) => {
                setJudul("");
                setDeskripsi("");
                setFormData(false);
+                 setAlert("Data berhasil ditambahkan");
                getByTodolistId();
             //    console.log(response);
              })
@@ -81,6 +84,7 @@ const Step = (props) => {
                 setId("");
                 setFormData(false);
                 setEditData(false);
+                setAlert("Data berhasil diubah");
                 getByTodolistId();
                 //  console.log(response);
               })
@@ -93,6 +97,7 @@ const Step = (props) => {
           axios
             .delete(Api_Url + "step/" + id)
             .then(function (response) {
+              setAlert("Data berhasil dihapus");
               getByTodolistId();
               // console.log(response);
             })
@@ -142,6 +147,8 @@ const Step = (props) => {
             Kembali
           </Button>
 
+          {alert && <AlertComponent alert={alert} />}
+
           <FormComponent
             formData={formData}
             setFormData={setFormData}
@@ -165,7 +172,9 @@ const Step = (props) => {
               />
             ))}
 
-          {step.total > 0 && <PaginationComponent data={step} setData={setStep} />}
+          {step.total > 0 && (
+            <PaginationComponent data={step} setData={setStep} />
+          )}
 
           {step.total === 0 && (
             <p className="text-center text-danger mt-4">

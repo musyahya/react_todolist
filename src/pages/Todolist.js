@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import AlertComponent from '../components/AlertComponent';
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
 import PaginationComponent from '../components/PaginationComponent';
@@ -11,6 +12,7 @@ const Todolist = () => {
     const [todolist, setTodolist] = useState('');
     const [formData, setFormData] = useState(false);
     const [editData, setEditData] = useState(false);
+    const [alert, setAlert] = useState(false);
 
     const [id, setId] = useState('');
     const [judul, setJudul] = useState('');
@@ -42,6 +44,7 @@ const Todolist = () => {
               setJudul('');
               setDeskripsi('');
               setFormData(false);
+              setAlert('Data berhasil ditambahkan');
               getTodolist();
               // console.log(response);
           })
@@ -76,6 +79,7 @@ const Todolist = () => {
              setId("");
              setFormData(false);
             setEditData(false);
+            setAlert("Data berhasil diubah");
              getTodolist();
             //  console.log(response);
            })
@@ -89,6 +93,7 @@ const Todolist = () => {
           .delete(Api_Url + "todolist/" + id)
           .then(function (response) {
             getTodolist();
+              setAlert("Data berhasil dihapus");
              console.log(response);
           })
           .catch(function (error) {
@@ -126,6 +131,8 @@ const Todolist = () => {
           <Button variant="primary" size="sm" onClick={showInsert}>
             Tambah
           </Button>
+
+          {alert && <AlertComponent alert={alert} />}
 
           <FormComponent
             formData={formData}
