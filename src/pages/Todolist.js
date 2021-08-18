@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
+import PaginationComponent from '../components/PaginationComponent';
 import { Api_Url } from '../utility/Api_Url';
 
 const Todolist = () => {
@@ -138,8 +139,8 @@ const Todolist = () => {
             updateData={updateTodolist}
           />
 
-          {todolist &&
-            todolist.map((item) => (
+          {todolist.data &&
+            todolist.data.map((item) => (
               <CardComponent
                 key={item.id}
                 data={item}
@@ -147,6 +148,16 @@ const Todolist = () => {
                 deleteData={deleteTodolist}
               />
             ))}
+
+          {todolist.total > 0 && (
+            <PaginationComponent data={todolist} setData={setTodolist} />
+          )}
+
+          {todolist.total === 0 && (
+            <p className="text-center text-danger mt-4">
+              <strong>Tidak memiliki data</strong>
+            </p>
+          )}
         </div>
       </div>
     );
