@@ -1,66 +1,84 @@
-import axios from 'axios';
-import React, { Fragment } from 'react';
-import { Pagination } from 'react-bootstrap';
+import axios from "axios";
+import React, { Fragment } from "react";
+import { Pagination } from "react-bootstrap";
 
 const PaginationComponent = ({ data, setData }) => {
-  console.log(data);
+//   console.log(data);
 
-  function firstPage(){
-       axios
-         .get(data.first_page_url)
-         .then(function (response) {
-           setData(response.data);
+  function firstPage() {
+    axios
+      .get(data.first_page_url)
+      .then(function (response) {
+        setData(response.data);
         //    console.log(response);
-         })
-         .catch(function (error) {
+      })
+      .catch(function (error) {
         //    console.log(error);
-         });
+      });
   }
 
-  function nextPage(){
-       axios
-         .get(data.next_page_url)
-         .then(function (response) {
-           setData(response.data);
-            //   console.log(response);
-         })
-         .catch(function (error) {
-           //    console.log(error);
-         });
-  }
-  
-  function prevPage(){
-       axios
-         .get(data.prev_page_url)
-         .then(function (response) {
-           setData(response.data);
-        //    console.log(response);
-         })
-         .catch(function (error) {
-           //    console.log(error);
-         });
-  }
-
-  function lastPage(){
-       axios
-         .get(data.last_page_url)
-         .then(function (response) {
-           setData(response.data);
-        //    console.log(response);
-         })
-         .catch(function (error) {
+  function nextPage() {
+    axios
+      .get(data.next_page_url)
+      .then(function (response) {
+        setData(response.data);
+        //   console.log(response);
+      })
+      .catch(function (error) {
         //    console.log(error);
-         });
+      });
   }
 
-  let active = 2;
+  function numberPage(number) {
+    axios
+      .get(data.path + "?page=" + number)
+      .then(function (response) {
+        setData(response.data);
+        //    console.log(response);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  }
+
+  function prevPage() {
+    axios
+      .get(data.prev_page_url)
+      .then(function (response) {
+        setData(response.data);
+        //    console.log(response);
+      })
+      .catch(function (error) {
+        //    console.log(error);
+      });
+  }
+
+  function lastPage() {
+    axios
+      .get(data.last_page_url)
+      .then(function (response) {
+        setData(response.data);
+        //    console.log(response);
+      })
+      .catch(function (error) {
+        //    console.log(error);
+      });
+  }
+
+  let active = data.current_page;
   let items = [];
-  for (let number = 1; number <= 5; number++) {
-    items.push(
-      <Pagination.Item key={number} active={number === active}>
-        {number}
-      </Pagination.Item>
-    );
+  if (data.last_page !== 1) {
+    for (let number = 1; number <= data.last_page; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          onClick={() => numberPage(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
   }
 
   return (
@@ -72,11 +90,8 @@ const PaginationComponent = ({ data, setData }) => {
         </Fragment>
       )}
 
-      <Pagination.Item>{10}</Pagination.Item>
-      <Pagination.Item>{11}</Pagination.Item>
-      <Pagination.Item active>{12}</Pagination.Item>
-      <Pagination.Item>{13}</Pagination.Item>
-      <Pagination.Item disabled>{14}</Pagination.Item>
+      {data.last !== 1 && items}
+
       {data.next_page_url && (
         <Fragment>
           <Pagination.Next onClick={nextPage} />
