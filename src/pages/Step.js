@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, withRouter } from "react-router-dom";
 import AlertComponent from '../components/AlertComponent';
 import CardComponent from '../components/CardComponent';
@@ -106,6 +106,26 @@ const Step = (props) => {
             });
         }
 
+         function seacrhStep(search) {
+           axios
+             .get(Api_Url + "step/" + props.match.params.id + "/" + search)
+             .then(function (response) {
+               setStep(response.data);
+               // console.log(response);
+             })
+             .catch(function (error) {
+               // console.log(error);
+             });
+         }
+
+        function inputSearch(search){
+           if (search) {
+             seacrhStep(search);
+           } else {
+             getByTodolistId();
+           }
+        }
+
       function showInsert() {
         setFormData(true);
         setEditData(false);
@@ -133,19 +153,30 @@ const Step = (props) => {
     return (
       <div className="row justify-content-center mt-5">
         <div className="col-md-6">
-          <Button variant="primary" size="sm" onClick={showInsert}>
-            Tambah
-          </Button>
+          <Row>
+            <Col>
+              <Button variant="primary" size="sm" onClick={showInsert}>
+                Tambah
+              </Button>
 
-          <Button
-            variant="secondary"
-            className="ml-3"
-            size="sm"
-            as={Link}
-            to="/"
-          >
-            Kembali
-          </Button>
+              <Button
+                variant="secondary"
+                className="ml-3"
+                size="sm"
+                as={Link}
+                to="/"
+              >
+                Kembali
+              </Button>
+            </Col>
+            <Col>
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                onChange={(e) => inputSearch(e.target.value)}
+              />
+            </Col>
+          </Row>
 
           {alert && <AlertComponent alert={alert} />}
 
