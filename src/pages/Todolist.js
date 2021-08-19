@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import AlertComponent from '../components/AlertComponent';
 import CardComponent from '../components/CardComponent';
 import FormComponent from '../components/FormComponent';
@@ -94,11 +94,31 @@ const Todolist = () => {
           .then(function (response) {
             getTodolist();
               setAlert("Data berhasil dihapus");
-             console.log(response);
+            //  console.log(response);
           })
           .catch(function (error) {
-             console.log(error);
+            //  console.log(error);
           });
+    }
+
+    function seacrhTodolist(search) {
+      axios
+        .get(Api_Url + "todolist/" + search +"/search")
+        .then(function (response) {
+           setTodolist(response.data);
+          // console.log(response);
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
+    }
+
+    function inputSearch(search){
+      if (search) {
+        seacrhTodolist(search);
+      } else {
+        getTodolist();
+      }
     }
 
     function showInsert(){
@@ -128,9 +148,16 @@ const Todolist = () => {
     return (
       <div className="row justify-content-center mt-5">
         <div className="col-md-6">
-          <Button variant="primary" size="sm" onClick={showInsert}>
-            Tambah
-          </Button>
+          <Row>
+            <Col>
+              <Button variant="primary" size="sm" onClick={showInsert}>
+                Tambah
+              </Button>
+            </Col>
+            <Col>
+              <Form.Control type="search" placeholder="Search" onChange={(e) => inputSearch(e.target.value)} />
+            </Col>
+          </Row>
 
           {alert && <AlertComponent alert={alert} />}
 
@@ -162,7 +189,7 @@ const Todolist = () => {
 
           {todolist.total === 0 && (
             <p className="text-center text-danger mt-4">
-              <strong>Tidak memiliki data</strong>
+              <strong>Tidak ada data</strong>
             </p>
           )}
         </div>
